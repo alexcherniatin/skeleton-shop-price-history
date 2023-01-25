@@ -22,6 +22,36 @@ final class PriceHistoryModel extends Model
         return ($result) ? $this->db->lastInsertId() : 0;
     }
 
+    public function isModified(PriceHistory $dto): bool
+    {
+        $query = 'SELECT price
+        FROM shop_price_history
+        WHERE product_id = :product_id ';
+
+        if (\is_null($dto->variantId)) {
+            $query .= ' AND variant_id IS NULL';
+        } else {
+            $query .= ' AND variant_id = :variant_id';
+        }
+
+        $query .= ' 
+        ORDER BY id DESC
+        LIMIT 1';
+
+        $this->db->query($query);
+        $this->db->bind(':product_id', $dto->productId);
+        if (!\is_null($dto->variantId)) {
+            $this->db->bind(':variant_id', $dto->variantId);
+        }
+        $result = $this->db->result();
+
+        if (!$result) {
+            return true;
+        }
+
+        return $result['price'] != $dto->price;
+    }
+
     public function minPriceByProductFromDate(int $productId, string $date, float $defaultValue = 0): float
     {
         $query = "SELECT min(price) as min_price

@@ -42,11 +42,11 @@ final class ProductUpdated
 
     /**
      *
-     * @var string 
+     * @var string|null 
      */
     public $saleStartDate;
 
-    public function __construct(int $productId, ?int $variantId, float $price, float $salePrice, bool $sale, bool $productWithVariants, string $saleStartDate)
+    public function __construct(int $productId, ?int $variantId, float $price, float $salePrice, bool $sale, bool $productWithVariants, ?string $saleStartDate)
     {
         $this->productId = $productId;
 

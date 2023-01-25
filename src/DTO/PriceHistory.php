@@ -2,6 +2,8 @@
 
 namespace SkeletonPriceHistory\DTO;
 
+use SkeletonPriceHistory\Helpers\PriceHistoryHelper;
+
 final class PriceHistory
 {
     /**
@@ -24,7 +26,7 @@ final class PriceHistory
 
     /**
      *
-     * @var string|null
+     * @var string
      */
     public $appliedDate;
 
@@ -45,5 +47,15 @@ final class PriceHistory
         $this->appliedDate = $appliedDate;
 
         $this->createdAt = $createdAt;
+    }
+
+    public static function fromProductUpdatedDto(ProductUpdated $dto): PriceHistory
+    {
+        return new self(
+            $dto->productId,
+            ($dto->productWithVariants) ? $dto->variantId : null,
+            ($dto->sale) ? $dto->salePrice : $dto->price,
+            ($dto->sale && !\is_null($dto->saleStartDate)) ? $dto->saleStartDate : PriceHistoryHelper::nowDate()
+        );
     }
 }
