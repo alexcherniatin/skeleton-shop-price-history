@@ -1,0 +1,20 @@
+{
+    "name": "alexcherniatin/skeleton-shop-price-history",
+    "description": "Skeleton shop price history",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cherniatin Oleksandr",
+            "email": "alexchernyatin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "SkeletonPriceHistory\\": "src"
+        }
+    }
+}
