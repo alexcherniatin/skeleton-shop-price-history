@@ -1,19 +1,17 @@
-<?php
-
-//after updating product
-
+## After updating product
+```php
 \SkeletonPriceHistory\Actions\AddProductPriceHistory::execute(
     \SkeletonPriceHistory\DTO\PriceHistory::fromProduct($product)
 );
-
-//after updating variant
-
+```
+## After updating variant
+```php
 \SkeletonPriceHistory\Actions\AddProductPriceHistory::execute(
     \SkeletonPriceHistory\DTO\PriceHistory::fromVariant($variant)
 );
-
-//product builder component
-
+```
+## Product builder component
+```php
 private function minimalMonthPrice(): void
 {
     if (!ProductHelper::isSale($this->product)) {
@@ -35,7 +33,8 @@ private function minimalMonthPrice(): void
     </div>
     ';
 }
-
-//update component after chaning variant state in variant.js
-
+```
+## Update component after chaning variant state in variant.js
+```js
 $('.component-minimal-month-price').html(data.minimalMonthPrice);
+```
