@@ -1,18 +1,15 @@
 <?php
 
-namespace SkeletonPriceHistory\Services;
+namespace SkeletonPriceHistory\Actions;
 
 use SkeletonPriceHistory\DTO\PriceHistory;
-use SkeletonPriceHistory\DTO\ProductUpdated;
 use SkeletonPriceHistory\Models\PriceHistoryModel;
 
-final class PriceHistoryService
+final class AddProductPriceHistory
 {
-    public function productUpdated(ProductUpdated $dto): void
+    public static function execute(PriceHistory $priceHistory): void
     {
         $priceHistoryModel = new PriceHistoryModel();
-
-        $priceHistory = PriceHistory::fromProductUpdatedDto($dto);
 
         if (!$priceHistoryModel->isModified($priceHistory)) {
             return;

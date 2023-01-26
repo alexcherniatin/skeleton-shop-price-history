@@ -49,13 +49,23 @@ final class PriceHistory
         $this->createdAt = $createdAt;
     }
 
-    public static function fromProductUpdatedDto(ProductUpdated $dto): PriceHistory
+    public static function fromProduct(array $product): PriceHistory
     {
         return new self(
-            $dto->productId,
-            ($dto->productWithVariants) ? $dto->variantId : null,
-            ($dto->sale) ? $dto->salePrice : $dto->price,
-            ($dto->sale && !\is_null($dto->saleStartDate)) ? $dto->saleStartDate : PriceHistoryHelper::nowDate()
+            $product['id'],
+            null,
+            ($product['sale'] == 1) ? $product['sale_price'] : $product['price'],
+            ($product['sale'] == 1 && !\is_null($product['sale_start_date'] ?? null)) ? $product['sale_start_date'] : PriceHistoryHelper::nowDate()
+        );
+    }
+
+    public static function fromVariant(array $variant): PriceHistory
+    {
+        return new self(
+            $variant['product_id'],
+            $variant['id'],
+            ($variant['sale'] == 1) ? $variant['sale_price'] : $variant['price'],
+            ($variant['sale'] == 1 && !\is_null($variant['sale_start_date'] ?? null)) ? $variant['sale_start_date'] : PriceHistoryHelper::nowDate()
         );
     }
 }

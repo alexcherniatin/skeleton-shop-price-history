@@ -52,7 +52,7 @@ final class PriceHistoryModel extends Model
         return $result['price'] != $dto->price;
     }
 
-    public function minPriceByProductFromDate(int $productId, string $date, float $defaultValue = 0): float
+    public function minPriceByProductFromDate(int $productId, string $dateFrom, float $defaultValue = 0): float
     {
         $query = "SELECT min(price) as min_price
         FROM shop_price_history
@@ -60,12 +60,12 @@ final class PriceHistoryModel extends Model
         LIMIT 1";
         $this->db->query($query);
         $this->db->bind(':product_id', $productId);
-        $this->db->bind(':date', $date);
+        $this->db->bind(':date', $dateFrom);
         $result = $this->db->result();
-        return ($result) ? $result['min_price'] : $defaultValue;
+        return ($result) ? $result['min_price'] ?? $defaultValue : $defaultValue;
     }
 
-    public function minPriceByVariantFromDate(int $variantId, string $date, float $defaultValue = 0): float
+    public function minPriceByVariantFromDate(int $variantId, string $dateFrom, float $defaultValue = 0): float
     {
         $query = "SELECT min(price) as min_price
         FROM shop_price_history
@@ -73,8 +73,8 @@ final class PriceHistoryModel extends Model
         LIMIT 1";
         $this->db->query($query);
         $this->db->bind(':variant_id', $variantId);
-        $this->db->bind(':date', $date);
+        $this->db->bind(':date', $dateFrom);
         $result = $this->db->result();
-        return ($result) ? $result['min_price'] : $defaultValue;
+        return ($result) ? $result['min_price'] ?? $defaultValue : $defaultValue;
     }
 }
